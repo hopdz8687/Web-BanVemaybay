@@ -7,4 +7,6 @@ return [
         'name' => 'banvemaybay',
     ],
     'base_path' => '/banvemaybay',
+    // Demo secret for JWT (learning only). Change in production.
+    'jwt_secret' => 'demo-secret-change-me',
 ];

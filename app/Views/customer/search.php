@@ -16,9 +16,9 @@
       background: rgba(255,255,255,0.95);
       border-radius: 8px;
       padding: 1rem;
-      border: 1px solid rgba(0,0,0,0.06);
+      border: 1px solid rgba(42, 16, 213, 0.06);
       color: #212529;
-      box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+      box-shadow: 0 6px 20px rgba(20, 229, 135, 0.08);
       /* ensure this main content area grows so footer stays at bottom on short pages */
       flex: 1 0 auto;
       display: flex;
@@ -91,7 +91,7 @@
               </td>
               <td><span class="badge bg-info"><?=$row['ghe_con']?></span></td>
               <td>
-                <a class="btn btn-sm btn-primary" href="<?=base_url('/customer/book')?>?chuyen_bay_id=<?=$row['id']?>">
+                <a class="btn btn-sm btn-primary"  href="<?=base_url('/customer/book')?>?chuyen_bay_id=<?=$row['id']?>">
                   <i class="bi bi-ticket-detailed"></i> Đặt Vé
                 </a>
               </td>

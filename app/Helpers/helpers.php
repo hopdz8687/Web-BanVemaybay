@@ -87,3 +87,109 @@ function redirect(string $path): void {
     header('Location: ' . duongDan($path));
     exit;
 }
+
+// --- API helpers (simple, learning-focused) ---
+
+function json_response($payload, int $status = 200): void
+{
+    http_response_code($status);
+    header('Content-Type: application/json; charset=utf-8');
+    echo json_encode($payload, JSON_UNESCAPED_UNICODE);
+    exit;
+}
+
+function json_input(): array
+{
+    $raw = file_get_contents('php://input');
+    if ($raw === false || trim($raw) === '') {
+        return [];
+    }
+
+    $data = json_decode($raw, true);
+    return is_array($data) ? $data : [];
+}
+
+function base64url_encode(string $data): string
+{
+    return rtrim(strtr(base64_encode($data), '+/', '-_'), '=');
+}
+
+function base64url_decode(string $data): string
+{
+    $data = strtr($data, '-_', '+/');
+    $pad = strlen($data) % 4;
+    if ($pad > 0) {
+        $data .= str_repeat('=', 4 - $pad);
+    }
+    return base64_decode($data);
+}
+
+function jwt_encode(array $payload, int $ttlSeconds = 3600): string
+{
+    global $config;
+    $secret = $config['jwt_secret'] ?? 'demo-secret';
+
+    $header = ['alg' => 'HS256', 'typ' => 'JWT'];
+    $iat = time();
+    $payload['iat'] = $payload['iat'] ?? $iat;
+    $payload['exp'] = $payload['exp'] ?? ($iat + $ttlSeconds);
+
+    $h = base64url_encode(json_encode($header));
+    $p = base64url_encode(json_encode($payload));
+    $sig = hash_hmac('sha256', "$h.$p", $secret, true);
+    $s = base64url_encode($sig);
+
+    return $h . '.' . $p . '.' . $s;
+}
+
+function jwt_decode(string $token): ?array
+{
+    global $config;
+    $secret = $config['jwt_secret'] ?? 'demo-secret';
+
+    $parts = explode('.', $token);
+    if (count($parts) !== 3) {
+        return null;
+    }
+
+    [$h, $p, $s] = $parts;
+    $headerJson = base64url_decode($h);
+    $payloadJson = base64url_decode($p);
+
+    $header = json_decode($headerJson, true);
+    $payload = json_decode($payloadJson, true);
+    if (!is_array($header) || !is_array($payload)) {
+        return null;
+    }
+
+    if (($header['alg'] ?? '') !== 'HS256') {
+        return null;
+    }
+
+    $expected = base64url_encode(hash_hmac('sha256', "$h.$p", $secret, true));
+    if (!hash_equals($expected, $s)) {
+        return null;
+    }
+
+    if (isset($payload['exp']) && time() > (int)$payload['exp']) {
+        return null;
+    }
+
+    return $payload;
+}
+
+function bearer_token(): ?string
+{
+    $header = $_SERVER['HTTP_AUTHORIZATION'] ?? $_SERVER['REDIRECT_HTTP_AUTHORIZATION'] ?? '';
+    if ($header === '' && function_exists('apache_request_headers')) {
+        $headers = apache_request_headers();
+        if (isset($headers['Authorization'])) {
+            $header = $headers['Authorization'];
+        }
+    }
+
+    if (preg_match('/Bearer\s+(.*)$/i', $header, $m)) {
+        return trim($m[1]);
+    }
+    return null;
+}

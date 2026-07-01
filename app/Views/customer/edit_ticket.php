@@ -17,7 +17,7 @@
     .card:not(.bg-gradient) { background-color: rgba(255,255,255,0.95) !important; }
     .card-header.bg-light { background-color: rgba(248,249,250,0.9) !important; }
     .container.py-4 { background: transparent; }
-    .card.bg-gradient { background: linear-gradient(135deg, #3a7bd5, #1f3b8f) !important; color: #fff; border: none; box-shadow: 0 8px 24px rgba(0,0,0,0.35); }
+    .card.bg-gradient { background: linear-gradient(135deg, #0E6B7E, #1B8FA0) !important; color: #fff; border: none; box-shadow: 0 8px 24px rgba(0,0,0,0.35); }
     .card.bg-gradient .card-body { background: transparent; }
   </style>
 </head>
@@ -26,7 +26,7 @@
   <div class="row justify-content-center">
     <div class="col-md-10">
       <div class="card shadow">
-        <div class="card-header bg-gradient" style="background: linear-gradient(135deg, #667eea, #764ba2);">
+        <div class="card-header bg-gradient" style="background: linear-gradient(135deg, #0E6B7E, #1B8FA0);">
           <div class="d-flex justify-content-between align-items-center">
             <h4 class="text-white mb-0"><i class="bi bi-pencil-square"></i> Sửa Thông Tin Hành Khách</h4>
             <small class="text-white-50">Chuyến bay: <?=htmlspecialchars($flight['so_hieu'])?></small>
@@ -46,7 +46,7 @@
                 $pass = $passengersForForm[$i - 1] ?? [];
                 $seatNumber = $existingSeats[$i - 1] ?? $i;
             ?>
-              <div class="card mb-3 border-start border-4" style="border-left-color: #667eea !important;">
+              <div class="card mb-3 border-start border-4" style="border-left-color: #0E6B7E !important;">
                 <div class="card-header bg-light">
                   <div class="d-flex justify-content-between align-items-center">
                     <h6 class="mb-0"><i class="bi bi-person-badge"></i> Hành Khách <?=$i?></h6>

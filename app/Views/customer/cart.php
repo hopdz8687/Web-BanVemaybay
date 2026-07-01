@@ -25,10 +25,10 @@
   <div class="d-flex justify-content-between align-items-center mb-4">
     <h2 class="mb-0"><i class="bi bi-cart"></i> Giỏ hàng</h2>
     <div class="d-flex gap-2">
-      <a href="<?=base_url('/customer/search')?>" class="btn btn-outline-primary">
+      <a href="<?=base_url('/customer/search')?>" class="btn btn-outline-primary" style ="background: linear-gradient(135deg, hsl(244, 87%, 56%)); color: white;">
         <i class="bi bi-search"></i> Tìm chuyến bay
       </a>
-      <a href="<?=base_url('/customer/my-tickets')?>" class="btn btn-outline-success">
+      <a href="<?=base_url('/customer/my-tickets')?>" class="btn btn-outline-success" style="background: linear-gradient(135deg, #0E6B7E, #1B8FA0); color: white;">
         <i class="bi bi-ticket"></i> Vé của tôi
       </a>
     </div>

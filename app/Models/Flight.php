@@ -116,9 +116,9 @@ class Flight {
         }
         $stmt = $mysqli->prepare('INSERT INTO chuyen_bay (so_hieu,noi_di,noi_den,gio_khoi_hanh,gio_ha_canh,gia_thuong,gia_thuong_gia,ghe_con,may_bay_id) VALUES (?,?,?,?,?,?,?,?,?)');
         if (!$stmt) {
-            return false;
+            throw new Exception('MySQL prepare failed: ' . ($mysqli->error ?? 'unknown error'));
         }
-        $stmt->bind_param(
+        $bind = $stmt->bind_param(
             'sssssddii',
             $data['so_hieu'],
             $data['noi_di'],
@@ -130,7 +130,14 @@ class Flight {
             $data['ghe_con'],
             $may_bay_id
         );
-        return $stmt->execute();
+        if ($bind === false) {
+            throw new Exception('bind_param failed: ' . ($stmt->error ?: $mysqli->error));
+        }
+        $exec = $stmt->execute();
+        if ($exec === false) {
+            throw new Exception('MySQL execute failed: ' . ($stmt->error ?: $mysqli->error));
+        }
+        return true;
     }
 
     public static function update(int $id, array $data): bool {

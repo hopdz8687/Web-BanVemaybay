@@ -20,7 +20,7 @@
   <div class="row justify-content-center">
     <div class="col-md-6">
       <div class="card shadow">
-        <div class="card-header bg-primary text-white">
+        <div class="card-header bg-primary text-white" style="background: linear-gradient(135deg, #0E6B7E, #1B8FA0);">
           <h5 class="mb-0">Cập nhật thông tin</h5>
         </div>
         <div class="card-body p-4">

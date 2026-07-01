@@ -1,0 +1,565 @@
+{
+  "client": "Thunder Client",
+  "collectionName": "Ban Ve May Bay API",
+  "dateExported": "2026-06-20",
+  "version": "1.1",
+  "folders": [
+    {
+      "id": "health",
+      "name": "Health Check",
+      "requests": [
+        {
+          "id": "ping",
+          "name": "GET /ping",
+          "method": "GET",
+          "url": "{{baseUrl}}/ping",
+          "tests": [],
+          "headers": {}
+        }
+      ]
+    },
+    {
+      "id": "auth",
+      "name": "Authentication",
+      "requests": [
+        {
+          "id": "login",
+          "name": "POST /auth/login",
+          "method": "POST",
+          "url": "{{baseUrl}}/auth/login",
+          "headers": {
+            "Content-Type": "application/json"
+          },
+          "body": {
+            "type": "json",
+            "raw": "{\n  \"email\": \"admin@gmail.com\",\n  \"password\": \"123456\"\n}"
+          },
+          "tests": []
+        },
+        {
+          "id": "register",
+          "name": "POST /auth/register",
+          "method": "POST",
+          "url": "{{baseUrl}}/auth/register",
+          "headers": {
+            "Content-Type": "application/json"
+          },
+          "body": {
+            "type": "json",
+            "raw": "{\n  \"ten\": \"Nguyen Van A\",\n  \"email\": \"nguyenvana@gmail.com\",\n  \"password\": \"123456\"\n}"
+          },
+          "tests": []
+        },
+        {
+          "id": "me",
+          "name": "GET /auth/me",
+          "method": "GET",
+          "url": "{{baseUrl}}/auth/me",
+          "headers": {
+            "Authorization": "Bearer {{token}}"
+          },
+          "tests": []
+        },
+        {
+          "id": "logout",
+          "name": "POST /auth/logout",
+          "method": "POST",
+          "url": "{{baseUrl}}/auth/logout",
+          "headers": {},
+          "tests": []
+        }
+      ]
+    },
+    {
+      "id": "flights",
+      "name": "Flights (Public)",
+      "requests": [
+        {
+          "id": "flights_index",
+          "name": "GET /flights",
+          "method": "GET",
+          "url": "{{baseUrl}}/flights",
+          "headers": {},
+          "tests": []
+        },
+        {
+          "id": "flights_search",
+          "name": "GET /flights/search",
+          "method": "GET",
+          "url": "{{baseUrl}}/flights/search?noi_di=Hà%20Nội&noi_den=Moscow&ngay=2026-01-21",
+          "headers": {},
+          "tests": []
+        },
+        {
+          "id": "flights_show",
+          "name": "GET /flights/{id}",
+          "method": "GET",
+          "url": "{{baseUrl}}/flights/8",
+          "headers": {},
+          "tests": []
+        }
+      ]
+    },
+    {
+      "id": "bookings",
+      "name": "Bookings (Customer)",
+      "requests": [
+        {
+          "id": "bookings_index",
+          "name": "GET /bookings",
+          "method": "GET",
+          "url": "{{baseUrl}}/bookings",
+          "headers": {
+            "Authorization": "Bearer {{token}}"
+          },
+          "tests": []
+        },
+        {
+          "id": "bookings_index_paid",
+          "name": "GET /bookings?status=paid",
+          "method": "GET",
+          "url": "{{baseUrl}}/bookings?status=paid",
+          "headers": {
+            "Authorization": "Bearer {{token}}"
+          },
+          "tests": []
+        },
+        {
+          "id": "bookings_create",
+          "name": "POST /bookings",
+          "method": "POST",
+          "url": "{{baseUrl}}/bookings",
+          "headers": {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer {{token}}"
+          },
+          "body": {
+            "type": "json",
+            "raw": "{\n  \"chuyen_bay_id\": 15,\n  \"ve_id\": 10,\n  \"so_luong\": 2,\n  \"hanh_khach\": [\n    {\n      \"ten\": \"Nguyen Van A\",\n      \"dien_thoai\": \"0123456789\",\n      \"email\": \"nguyenvana@gmail.com\",\n      \"gioi_tinh\": \"Nam\",\n      \"tuoi\": 30\n    },\n    {\n      \"ten\": \"Tran Thi B\",\n      \"dien_thoai\": \"0987654321\",\n      \"email\": \"tranthib@gmail.com\",\n      \"gioi_tinh\": \"Nu\",\n      \"tuoi\": 28\n    }\n  ]\n}"
+          },
+          "tests": []
+        },
+        {
+          "id": "bookings_show",
+          "name": "GET /bookings/{id}",
+          "method": "GET",
+          "url": "{{baseUrl}}/bookings/44",
+          "headers": {
+            "Authorization": "Bearer {{token}}"
+          },
+          "tests": []
+        },
+        {
+          "id": "bookings_update",
+          "name": "PUT /bookings/{id}",
+          "method": "PUT",
+          "url": "{{baseUrl}}/bookings/44",
+          "headers": {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer {{token}}"
+          },
+          "body": {
+            "type": "json",
+            "raw": "{\n  \"so_luong\": 3\n}"
+          },
+          "tests": []
+        },
+        {
+          "id": "bookings_delete",
+          "name": "DELETE /bookings/{id}",
+          "method": "DELETE",
+          "url": "{{baseUrl}}/bookings/44",
+          "headers": {
+            "Authorization": "Bearer {{token}}"
+          },
+          "tests": []
+        },
+        {
+          "id": "bookings_checkout",
+          "name": "POST /bookings/{id}/checkout",
+          "method": "POST",
+          "url": "{{baseUrl}}/bookings/44/checkout",
+          "headers": {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer {{token}}"
+          },
+          "body": {
+            "type": "json",
+            "raw": "{\n  \"ten_thanh_toan\": \"Nguyen Van A\",\n  \"dien_thoai_thanh_toan\": \"0123456789\",\n  \"email_thanh_toan\": \"payer@gmail.com\",\n  \"dia_chi_thanh_toan\": \"123 Nguyen Hue, Hanoi\",\n  \"phuong_thuc_thanh_toan\": \"direct\"\n}"
+          },
+          "tests": []
+        }
+      ]
+    },
+    {
+      "id": "my-tickets",
+      "name": "My Tickets (Customer)",
+      "requests": [
+        {
+          "id": "tickets_index",
+          "name": "GET /my-tickets",
+          "method": "GET",
+          "url": "{{baseUrl}}/my-tickets",
+          "headers": {
+            "Authorization": "Bearer {{token}}"
+          },
+          "tests": []
+        },
+        {
+          "id": "tickets_show",
+          "name": "GET /my-tickets/{id}",
+          "method": "GET",
+          "url": "{{baseUrl}}/my-tickets/1",
+          "headers": {
+            "Authorization": "Bearer {{token}}"
+          },
+          "tests": []
+        },
+        {
+          "id": "tickets_update",
+          "name": "PUT /my-tickets/{id}",
+          "method": "PUT",
+          "url": "{{baseUrl}}/my-tickets/1",
+          "headers": {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer {{token}}"
+          },
+          "body": {
+            "type": "json",
+            "raw": "{\n  \"ten_hanh_khach\": \"Nguyen Van B\",\n  \"dien_thoai\": \"0111111111\",\n  \"email_hanh_khach\": \"nguyenvanb@gmail.com\",\n  \"gioi_tinh\": \"Nam\",\n  \"tuoi\": 32\n}"
+          },
+          "tests": []
+        }
+      ]
+    },
+    {
+      "id": "admin-planes",
+      "name": "Admin - Planes",
+      "requests": [
+        {
+          "id": "admin_planes_index",
+          "name": "GET /admin/planes",
+          "method": "GET",
+          "url": "{{baseUrl}}/admin/planes",
+          "headers": {
+            "Authorization": "Bearer {{adminToken}}"
+          },
+          "tests": []
+        },
+        {
+          "id": "admin_planes_create",
+          "name": "POST /admin/planes",
+          "method": "POST",
+          "url": "{{baseUrl}}/admin/planes",
+          "headers": {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer {{adminToken}}"
+          },
+          "body": {
+            "type": "json",
+            "raw": "{\n  \"ma_may_bay\": \"B787\",\n  \"ten_may_bay\": \"Boeing 787\",\n  \"hang_may_bay\": \"Boeing Dreamliner\"\n}"
+          },
+          "tests": []
+        },
+        {
+          "id": "admin_planes_show",
+          "name": "GET /admin/planes/{id}",
+          "method": "GET",
+          "url": "{{baseUrl}}/admin/planes/1",
+          "headers": {
+            "Authorization": "Bearer {{adminToken}}"
+          },
+          "tests": []
+        },
+        {
+          "id": "admin_planes_update",
+          "name": "PUT /admin/planes/{id}",
+          "method": "PUT",
+          "url": "{{baseUrl}}/admin/planes/1",
+          "headers": {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer {{adminToken}}"
+          },
+          "body": {
+            "type": "json",
+            "raw": "{\n  \"ma_may_bay\": \"A321\",\n  \"ten_may_bay\": \"Vietjet A321\",\n  \"hang_may_bay\": \"Vietjet Air\"\n}"
+          },
+          "tests": []
+        },
+        {
+          "id": "admin_planes_delete",
+          "name": "DELETE /admin/planes/{id}",
+          "method": "DELETE",
+          "url": "{{baseUrl}}/admin/planes/1",
+          "headers": {
+            "Authorization": "Bearer {{adminToken}}"
+          },
+          "tests": []
+        }
+      ]
+    },
+    {
+      "id": "admin-flights",
+      "name": "Admin - Flights",
+      "requests": [
+        {
+          "id": "admin_flights_index",
+          "name": "GET /admin/flights",
+          "method": "GET",
+          "url": "{{baseUrl}}/admin/flights",
+          "headers": {
+            "Authorization": "Bearer {{adminToken}}"
+          },
+          "tests": []
+        },
+        {
+          "id": "admin_flights_create",
+          "name": "POST /admin/flights",
+          "method": "POST",
+          "url": "{{baseUrl}}/admin/flights",
+          "headers": {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer {{adminToken}}"
+          },
+          "body": {
+            "type": "json",
+            "raw": "{\n  \"so_hieu\": \"VN999\",\n  \"noi_di\": \"Hà Nội\",\n  \"noi_den\": \"Da Nang\",\n  \"gio_khoi_hanh\": \"2026-07-01 08:00:00\",\n  \"gio_ha_canh\": \"2026-07-01 10:00:00\",\n  \"gia_thuong\": 1500000,\n  \"gia_thuong_gia\": 2500000,\n  \"ghe_con\": 150,\n  \"may_bay_id\": 1\n}"
+          },
+          "tests": []
+        },
+        {
+          "id": "admin_flights_show",
+          "name": "GET /admin/flights/{id}",
+          "method": "GET",
+          "url": "{{baseUrl}}/admin/flights/15",
+          "headers": {
+            "Authorization": "Bearer {{adminToken}}"
+          },
+          "tests": []
+        },
+        {
+          "id": "admin_flights_update",
+          "name": "PUT /admin/flights/{id}",
+          "method": "PUT",
+          "url": "{{baseUrl}}/admin/flights/15",
+          "headers": {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer {{adminToken}}"
+          },
+          "body": {
+            "type": "json",
+            "raw": "{\n  \"so_hieu\": \"VN999\",\n  \"noi_di\": \"Hà Nội\",\n  \"noi_den\": \"Da Nang\",\n  \"gio_khoi_hanh\": \"2026-07-02 08:00:00\",\n  \"gio_ha_canh\": \"2026-07-02 10:00:00\",\n  \"gia_thuong\": 1600000,\n  \"gia_thuong_gia\": 2600000,\n  \"ghe_con\": 160,\n  \"may_bay_id\": 1\n}"
+          },
+          "tests": []
+        },
+        {
+          "id": "admin_flights_delete",
+          "name": "DELETE /admin/flights/{id}",
+          "method": "DELETE",
+          "url": "{{baseUrl}}/admin/flights/15",
+          "headers": {
+            "Authorization": "Bearer {{adminToken}}"
+          },
+          "tests": []
+        }
+      ]
+    },
+    {
+      "id": "admin-tickets",
+      "name": "Admin - Tickets",
+      "requests": [
+        {
+          "id": "admin_tickets_by_flight",
+          "name": "GET /admin/flights/{id}/tickets",
+          "method": "GET",
+          "url": "{{baseUrl}}/admin/flights/15/tickets",
+          "headers": {
+            "Authorization": "Bearer {{adminToken}}"
+          },
+          "tests": []
+        },
+        {
+          "id": "admin_tickets_create",
+          "name": "POST /admin/flights/{id}/tickets",
+          "method": "POST",
+          "url": "{{baseUrl}}/admin/flights/15/tickets",
+          "headers": {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer {{adminToken}}"
+          },
+          "body": {
+            "type": "json",
+            "raw": "{\n  \"ma_ve\": \"VN999-PREMIUM\",\n  \"hang_ve\": \"Thuong gia\",\n  \"gia\": 3000000,\n  \"so_luong_con\": 20\n}"
+          },
+          "tests": []
+        },
+        {
+          "id": "admin_tickets_show",
+          "name": "GET /admin/tickets/{id}",
+          "method": "GET",
+          "url": "{{baseUrl}}/admin/tickets/10",
+          "headers": {
+            "Authorization": "Bearer {{adminToken}}"
+          },
+          "tests": []
+        },
+        {
+          "id": "admin_tickets_update",
+          "name": "PUT /admin/tickets/{id}",
+          "method": "PUT",
+          "url": "{{baseUrl}}/admin/tickets/10",
+          "headers": {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer {{adminToken}}"
+          },
+          "body": {
+            "type": "json",
+            "raw": "{\n  \"ma_ve\": \"VN999-PREMIUM\",\n  \"hang_ve\": \"Thuong gia\",\n  \"gia\": 3200000,\n  \"so_luong_con\": 25\n}"
+          },
+          "tests": []
+        },
+        {
+          "id": "admin_tickets_delete",
+          "name": "DELETE /admin/tickets/{id}",
+          "method": "DELETE",
+          "url": "{{baseUrl}}/admin/tickets/10",
+          "headers": {
+            "Authorization": "Bearer {{adminToken}}"
+          },
+          "tests": []
+        }
+      ]
+    },
+    {
+      "id": "admin-customers",
+      "name": "Admin - Customers",
+      "requests": [
+        {
+          "id": "admin_customers_index",
+          "name": "GET /admin/customers",
+          "method": "GET",
+          "url": "{{baseUrl}}/admin/customers",
+          "headers": {
+            "Authorization": "Bearer {{adminToken}}"
+          },
+          "tests": []
+        },
+        {
+          "id": "admin_customers_create",
+          "name": "POST /admin/customers",
+          "method": "POST",
+          "url": "{{baseUrl}}/admin/customers",
+          "headers": {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer {{adminToken}}"
+          },
+          "body": {
+            "type": "json",
+            "raw": "{\n  \"ten\": \"Tran Thi C\",\n  \"email\": \"tranthic@gmail.com\",\n  \"password\": \"securepass123\"\n}"
+          },
+          "tests": []
+        },
+        {
+          "id": "admin_customers_show",
+          "name": "GET /admin/customers/{id}",
+          "method": "GET",
+          "url": "{{baseUrl}}/admin/customers/4",
+          "headers": {
+            "Authorization": "Bearer {{adminToken}}"
+          },
+          "tests": []
+        },
+        {
+          "id": "admin_customers_update",
+          "name": "PUT /admin/customers/{id}",
+          "method": "PUT",
+          "url": "{{baseUrl}}/admin/customers/4",
+          "headers": {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer {{adminToken}}"
+          },
+          "body": {
+            "type": "json",
+            "raw": "{\n  \"ten\": \"hop updated\",\n  \"email\": \"hop.updated@gmail.com\"\n}"
+          },
+          "tests": []
+        },
+        {
+          "id": "admin_customers_delete",
+          "name": "DELETE /admin/customers/{id}",
+          "method": "DELETE",
+          "url": "{{baseUrl}}/admin/customers/4",
+          "headers": {
+            "Authorization": "Bearer {{adminToken}}"
+          },
+          "tests": []
+        }
+      ]
+    },
+    {
+      "id": "admin-bookings",
+      "name": "Admin - Bookings",
+      "requests": [
+        {
+          "id": "admin_bookings_index",
+          "name": "GET /admin/bookings",
+          "method": "GET",
+          "url": "{{baseUrl}}/admin/bookings",
+          "headers": {
+            "Authorization": "Bearer {{adminToken}}"
+          },
+          "tests": []
+        },
+        {
+          "id": "admin_bookings_show",
+          "name": "GET /admin/bookings/{id}",
+          "method": "GET",
+          "url": "{{baseUrl}}/admin/bookings/44",
+          "headers": {
+            "Authorization": "Bearer {{adminToken}}"
+          },
+          "tests": []
+        }
+      ]
+    },
+    {
+      "id": "admin-revenue",
+      "name": "Admin - Revenue",
+      "requests": [
+        {
+          "id": "admin_revenue",
+          "name": "GET /admin/revenue",
+          "method": "GET",
+          "url": "{{baseUrl}}/admin/revenue",
+          "headers": {
+            "Authorization": "Bearer {{adminToken}}"
+          },
+          "tests": []
+        }
+      ]
+    }
+  ],
+  "environments": [
+    {
+      "id": "local",
+      "name": "Local Development",
+      "variables": {
+        "baseUrl": {
+          "name": "baseUrl",
+          "value": "http://localhost/banvemaybay/public/api/v1",
+          "enabled": true
+        },
+        "token": {
+          "name": "token",
+          "value": "",
+          "enabled": true
+        },
+        "adminToken": {
+          "name": "adminToken",
+          "value": "",
+          "enabled": true
+        }
+      }
+    }
+  ]
+}

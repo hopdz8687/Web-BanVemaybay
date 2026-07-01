@@ -19,8 +19,8 @@
       color: #ffffff;
       text-shadow: 0 1px 2px rgba(0,0,0,0.45);
     }
-    .ticket-card { border-left: 5px solid #007bff; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
-    .ticket-card .card-header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+    .ticket-card { border-left: 5px solid #0E6B7E; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+    .ticket-card .card-header { background: linear-gradient(90deg, #0E6B7E, #1B8FA0); }
     .ticket-card .card-body { padding: 1rem; }
     .ticket-card p { margin-bottom: .35rem; }
     .ticket-card hr { margin: .75rem 0; }
@@ -89,11 +89,13 @@
               <div class="row g-2 mb-2">
                 <div class="col-md-6">
                   <p class="mb-1"><small class="text-muted">Số ghế đặt</small><br><strong><?=htmlspecialchars((string)($booking['so_ghe_dat'] ?? 0))?> ghế</strong></p>
+
                 </div>
                 <div class="col-md-6">
                   <p class="mb-0"><small class="text-muted">Tổng tiền</small><br><strong class="text-success"><?=number_format((float)($booking['tong_tien'] ?? 0), 0)?> VND</strong></p>
                 </div>
               </div>
+              
 
               <div class="row g-2 mb-2">
                 <div class="col-md-6">
@@ -111,63 +113,92 @@
               </div>
 
               <hr>
-              <h6 class="fw-bold mb-2">Danh Sách Hành Khách</h6>
-              <?php $passengers = $passengersByBooking[$booking['id']] ?? []; ?>
-              <?php if (empty($passengers)): ?>
-                <div class="alert alert-secondary mb-0">Chưa có thông tin hành khách cho đơn này.</div>
-              <?php else: ?>
-                <div class="row g-2">
-                  <?php foreach ($passengers as $pass): ?>
-                    <div class="col-12 col-md-6">
-                      <div class="card border-0 shadow-sm">
-                        <div class="card-header bg-light d-flex justify-content-between align-items-center">
-                          <div class="fw-bold">
-                            Vé ghế <span class="badge bg-primary"><?=htmlspecialchars((string)($pass['so_ghe'] ?? ''))?></span>
-                          </div>
-                          <div>
-                            <span class="badge bg-info text-dark"><?=htmlspecialchars($pass['loai_ve'] ?? 'N/A')?></span>
-                          </div>
-                        </div>
-                        <div class="card-body">
-                          <div class="mb-2">
-                            <div class="text-muted small">Hành khách</div>
-                            <div class="fw-semibold"><?=htmlspecialchars($pass['ten_hanh_khach'] ?? '')?></div>
-                          </div>
-                          <div class="row g-2">
-                            <div class="col-12 col-sm-6">
-                              <div class="text-muted small">Điện thoại</div>
-                              <div><?=htmlspecialchars($pass['dien_thoai'] ?? '')?></div>
-                            </div>
-                            <div class="col-12 col-sm-6">
-                              <div class="text-muted small">Email</div>
-                              <div><?=htmlspecialchars($pass['email_hanh_khach'] ?? '')?></div>
-                            </div>
-                            <div class="col-12 col-sm-6">
-                              <div class="text-muted small">Giới tính</div>
-                              <div><?=htmlspecialchars($pass['gioi_tinh'] ?? 'N/A')?></div>
-                            </div>
-                            <div class="col-12 col-sm-6">
-                              <div class="text-muted small">Độ tuổi</div>
-                              <div><?=htmlspecialchars((string)($pass['tuoi'] ?? 'N/A'))?></div>
-                            </div>
-                          </div>
-                          <hr class="my-3">
-                          <div class="d-flex justify-content-between align-items-center">
-                            <div class="text-muted small">Giá vé</div>
-                            <div class="fw-bold text-success"><?=number_format((float)($pass['gia_ve'] ?? 0), 0)?> VND</div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  <?php endforeach; ?>
-                </div>
-              <?php endif; ?>
+              <div class="d-flex justify-content-between align-items-center">
+                <h6 class="fw-bold mb-0">Danh Sách Hành Khách</h6>
+                <button class="btn btn-sm btn-info" data-bs-toggle="modal" data-bs-target="#ticketDetailsModal<?=$booking['id']?>">
+                  <i class="bi bi-eye"></i> Xem Chi Tiết Vé
+                </button>
+              </div>
             </div>
           </div>
         </div>
       <?php endforeach; ?>
     </div>
   <?php endif; ?>
+
+  <!-- Modal Chi Tiết Vé -->
+  <?php foreach ($result as $booking): ?>
+    <?php $passengers = $passengersByBooking[$booking['id']] ?? []; ?>
+    <div class="modal fade" id="ticketDetailsModal<?=$booking['id']?>" tabindex="-1">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header" style="background: linear-gradient(90deg, #0E6B7E, #1B8FA0); color: white;">
+            <h5 class="modal-title">
+              <i class="bi bi-ticket-perforated"></i> Chi Tiết Vé - <?=htmlspecialchars($booking['so_hieu'])?>
+            </h5>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+          </div>
+          <div class="modal-body">
+            <?php if (empty($passengers)): ?>
+              <div class="alert alert-secondary">Chưa có thông tin hành khách cho đơn này.</div>
+            <?php else: ?>
+              <div class="row g-3">
+                <?php foreach ($passengers as $pass): ?>
+                  <div class="col-12">
+                    <div class="card border-0 shadow-sm" style="border-left: 4px solid #0E6B7E;">
+                      <div class="card-header bg-light d-flex justify-content-between align-items-center">
+                        <div class="fw-bold">
+                          Vé ghế <span class="badge bg-primary"><?=htmlspecialchars((string)($pass['so_ghe'] ?? ''))?></span>
+                        </div>
+                        <div>
+                          <span class="badge bg-info text-dark"><?=htmlspecialchars($pass['loai_ve'] ?? 'N/A')?></span>
+                        </div>
+                      </div>
+                      <div class="card-body">
+                        <div class="row">
+                          <div class="col-md-6">
+                            <div class="mb-3">
+                              <div class="text-muted small">Hành khách</div>
+                              <div class="fw-semibold"><?=htmlspecialchars($pass['ten_hanh_khach'] ?? '')?></div>
+                            </div>
+                            <div class="mb-3">
+                              <div class="text-muted small">Điện thoại</div>
+                              <div><?=htmlspecialchars($pass['dien_thoai'] ?? '')?></div>
+                            </div>
+                            <div class="mb-3">
+                              <div class="text-muted small">Giới tính</div>
+                              <div><?=htmlspecialchars($pass['gioi_tinh'] ?? 'N/A')?></div>
+                            </div>
+                          </div>
+                          <div class="col-md-6">
+                            <div class="mb-3">
+                              <div class="text-muted small">Email</div>
+                              <div><?=htmlspecialchars($pass['email_hanh_khach'] ?? '')?></div>
+                            </div>
+                            <div class="mb-3">
+                              <div class="text-muted small">Độ tuổi</div>
+                              <div><?=htmlspecialchars((string)($pass['tuoi'] ?? 'N/A'))?></div>
+                            </div>
+                            <div class="mb-3">
+                              <div class="text-muted small">Giá vé</div>
+                              <div class="fw-bold text-success"><?=number_format((float)($pass['gia_ve'] ?? 0), 0)?> VND</div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                <?php endforeach; ?>
+              </div>
+            <?php endif; ?>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  <?php endforeach; ?>
 
 </main>
 <?php require_once __DIR__ . '/../partials/footer.php'; ?>

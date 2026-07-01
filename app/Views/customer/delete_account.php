@@ -6,8 +6,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Xóa tài khoản</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body.customer-bg {
+      background: url('<?=base_url('/assets/images/anh2.png')?>') no-repeat center center fixed;
+      background-size: cover;
+      min-height: 100vh;
+    }
+  </style>
 </head>
-<body>
+<body class="customer-bg">
 <div class="container-lg py-4">
   <div class="mb-3">
     <h3 class="fw-bold">Xóa tài khoản</h3>

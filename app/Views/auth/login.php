@@ -23,7 +23,7 @@
       <div class="col-md-5">
         <div class="card login-card">
           <div class="card-body p-5">
-            <h2 class="card-title text-center mb-4 text-primary fw-bold">Đăng Nhập</h2>
+            <h2 class="card-title text-center mb-4" style="color: #0d42f2;">Đăng Nhập</h2>
             <?php if (!empty($error)): ?><div class="alert alert-danger"><?=htmlspecialchars($error)?></div><?php endif; ?>
             <form method="post" action="<?=base_url('/auth/login')?>">
               <div class="mb-3">
@@ -34,7 +34,7 @@
                 <label class="form-label">Mật khẩu</label>
                 <input name="password" type="password" class="form-control form-control-lg" placeholder="Nhập mật khẩu" required>
               </div>
-              <button class="btn btn-primary btn-lg w-100 mb-3">Đăng Nhập</button>
+              <button class="btn btn-primary btn-lg w-100 mb-3" style="background-color: #086d0f; border-color: #cb0929;">Đăng Nhập</button>
             </form>
             <hr>
             <p class="text-center text-muted mb-0">Chưa có tài khoản? <a href="<?=base_url('/auth/register')?>" class="text-primary fw-bold">Đăng ký ngay</a></p>

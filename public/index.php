@@ -3,6 +3,7 @@ require_once __DIR__ . '/../app/Controllers/AuthController.php';
 require_once __DIR__ . '/../app/Controllers/CustomerController.php';
 require_once __DIR__ . '/../app/Controllers/AdminController.php';
 require_once __DIR__ . '/../app/Helpers/helpers.php';
+require_once __DIR__ . '/../app/Routes/api.php';
 
 $auth = new AuthController();
 $customer = new CustomerController();
@@ -45,6 +46,27 @@ if (strpos($path, '/assets/') === 0) {
     exit;
 }
 
+// API routing: /api/v1/*
+if (strpos($path, '/api/v1') === 0) {
+    $apiPath = substr($path, strlen('/api/v1'));
+    if ($apiPath === false || $apiPath === '') {
+        $apiPath = '/';
+    }
+
+    try {
+        api_dispatch($apiPath, $_SERVER['REQUEST_METHOD'] ?? 'GET');
+    } catch (Throwable $e) {
+        // Temporary debug output for development — include exception message and trace.
+        // IMPORTANT: revert this change before deploying to production.
+        json_response([
+            'ok' => false,
+            'message' => $e->getMessage(),
+            'trace' => $e->getTraceAsString(),
+        ], 500);
+    }
+    exit;
+}
+
 switch ($path) {
     case '/':
         if (!is_logged_in()) {
@@ -68,6 +90,10 @@ switch ($path) {
         break;
     case '/auth/change-profile':
         $auth->changeProfile();
+        break;
+
+    case '/demo/api':
+        view('demo/api');
         break;
 
     // Customer

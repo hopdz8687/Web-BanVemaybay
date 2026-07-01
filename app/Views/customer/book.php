@@ -17,7 +17,7 @@
     .card:not(.bg-gradient){ background-color: rgba(255,255,255,0.95) !important; }
     .card-header.bg-light{ background-color: rgba(248,249,250,0.9) !important; }
     .container.py-4{ background: transparent; }
-    .card.bg-gradient{ background: linear-gradient(135deg, #3a7bd5, #1f3b8f) !important; color: #fff; border: none; box-shadow: 0 8px 24px rgba(0,0,0,0.35); }
+    .card.bg-gradient{ background: linear-gradient(135deg, #0E6B7E, #1B8FA0) !important; color: #fff; border: none; box-shadow: 0 8px 24px rgba(0,0,0,0.35); }
     .card.bg-gradient .card-body{ background: transparent; }
     /* Match ticket label typography to form labels/inputs */
     .ticket-economy,
@@ -54,7 +54,7 @@
 <div class="container py-4">
   <div class="mb-4">
     <h2><i class="bi bi-ticket-detailed"></i> Đặt Vé Chuyến Bay</h2>
-    <div class="card bg-gradient" style="background: linear-gradient(135deg, #667eea, #764ba2); border: none;">
+    <div class="card bg-gradient" style="background: linear-gradient(135deg, #0E6B7E, #1B8FA0); border: none;">
       <div class="card-body text-white">
         <div class="row align-items-center">
           <div class="col-md-6">
@@ -79,7 +79,7 @@
       <?php $step = $step ?? 'chon_ve'; ?>
       <?php if ($step === 'chon_ve'): ?>
         <div class="card shadow">
-          <div class="card-header bg-primary text-white">
+          <div class="card-header bg-primary text-white" style="background: linear-gradient(135deg, #0E6B7E, #1B8FA0);">
             <h5 class="mb-0"><i class="bi bi-1-circle"></i> Bước 1: Xem & Chọn Vé</h5>
           </div>
           <div class="card-body p-4">
@@ -132,7 +132,7 @@
 
       <?php elseif ($step === 'chon_so_luong'): ?>
         <div class="card shadow">
-          <div class="card-header bg-primary text-white">
+          <div class="card-header bg-primary text-white" style ="background: linear-gradient(135deg, #0E6B7E, #1B8FA0);">
             <h5 class="mb-0"><i class="bi bi-2-circle"></i> Bước 2: Chọn Số Lượng</h5>
           </div>
           <div class="card-body p-4">
@@ -171,7 +171,7 @@
               <input type="hidden" name="ticket_id" value="<?=$ticketId?>">
               <input type="hidden" name="so_luong" value="<?=$soLuong?>">
 
-              <div class="card mb-3 border-start border-4" style="border-left-color: #667eea !important;">
+              <div class="card mb-3 border-start border-4" style="border-left-color: #0E6B7E !important;">
                 <div class="card-header bg-light">
                   <h6 class="mb-0"><i class="bi bi-people"></i> Thông tin hành khách</h6>
                 </div>

@@ -11,9 +11,27 @@
   body > .container-xxl { flex: 1 0 auto; }
   footer.site-footer { margin-top: auto; }
   footer .container-lg { max-width: 1140px; }
+  
+  .site-footer {
+    background: #f5f8f3;
+    border-top: 1px solid #0E6B7E;
+  }
+  
+  .site-footer h6 {
+    color: #0E6B7E;
+  }
+  
+  .site-footer a {
+    color: #0E6B7E;
+    transition: color .15s;
+  }
+  
+  .site-footer a:hover {
+    color: #0A5169;
+  }
 </style>
 
-<footer class="site-footer bg-light py-4 mt-5 border-top">
+<footer class="site-footer py-4 mt-5">
   <div class="container-lg">
     <div class="row">
       <div class="col-md-4">
@@ -34,7 +52,7 @@
         </p>
       </div>
     </div>
-    <hr class="my-3">
+    <hr class="my-3" style="border-color: #d5dfd0;">
     <div class="text-center text-muted small">
       <p>&copy; 2004 Bán Vé Máy Bay hop good boy</p>
     </div>

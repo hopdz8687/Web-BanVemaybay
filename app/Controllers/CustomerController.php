@@ -47,10 +47,8 @@ class CustomerController {
         $selectedClass = 'Thuong';
         $total = 0.0;
 
-        // Danh sach ve cua chuyen bay
         $tickets = Ticket::byFlightId($chuyen_bay_id);
         if (empty($tickets)) {
-            // Khong cho dat neu admin chua tao ve cho chuyen bay
             $error = 'Chuyến bay chưa có loại vé. Vui lòng liên hệ admin để thêm vé trước khi đặt.';
             $step = 'chon_ve';
         }
@@ -491,13 +489,33 @@ class CustomerController {
                 return;
             }
 
-            Booking::paySelectedWithPayment($userId, $ids, [
+            $affectedRows = Booking::paySelectedWithPayment($userId, $ids, [
                 'ten_thanh_toan' => $payName,
                 'email_thanh_toan' => $payEmail,
                 'dien_thoai_thanh_toan' => $payPhone,
                 'dia_chi_thanh_toan' => $payAddress,
                 'phuong_thuc_thanh_toan' => $paymentMethod,
             ]);
+            
+            // Lấy thông tin các vé vừa thanh toán để hiển thị thông báo
+            if ($affectedRows > 0) {
+                $paidBookings = Booking::listForUserByIdsAndStatus($userId, $ids, 'paid');
+                if (!empty($paidBookings)) {
+                    // Tạo thông báo với mã vé
+                    $ticketNumbers = [];
+                    foreach ($paidBookings as $b) {
+                        if (!empty($b['ma_ve'])) {
+                            $ticketNumbers[] = htmlspecialchars($b['ma_ve']);
+                        }
+                    }
+                    $_SESSION['payment_success'] = [
+                        'count' => $affectedRows,
+                        'ticket_numbers' => $ticketNumbers,
+                        'timestamp' => date('Y-m-d H:i:s'),
+                    ];
+                }
+            }
+            
             unset($_SESSION['checkout_booking_ids']);
             redirect('/customer/my-tickets');
         }
@@ -556,6 +574,7 @@ class CustomerController {
             echo '<table border="1" cellspacing="0" cellpadding="5">';
 
             $headers = [
+                'SST',
                 'Ma dat ve','Chuyen bay','Noi di','Noi den','Gio khoi hanh','Hang bay','May bay','Ngay dat',
                 'So ghe','Tong tien','Trang thai thanh toan','Ghe','Hanh khach','Dien thoai','Email','Gioi tinh','Do tuoi','Loai ve','Gia ve'
             ];
@@ -565,6 +584,7 @@ class CustomerController {
             }
             echo '</tr>';
 
+            $sst = 0;
             foreach ($bookings as $booking) {
                 $dep = !empty($booking['gio_khoi_hanh']) ? date('Y-m-d H:i:s', strtotime($booking['gio_khoi_hanh'])) : '';
                 $bk = !empty($booking['dat_luc']) ? date('Y-m-d H:i:s', strtotime($booking['dat_luc'])) : '';
@@ -574,7 +594,9 @@ class CustomerController {
                 $passengers = $passengersByBooking[$booking['id']] ?? [];
                 if ($passengers) {
                     foreach ($passengers as $p) {
+                        $sst++;
                         $row = [
+                            $sst,
                             $booking['id'] ?? '', $booking['so_hieu'] ?? '', $booking['noi_di'] ?? '', $booking['noi_den'] ?? '',
                             $dep, $airline, $plane, $bk,
                             $booking['so_ghe_dat'] ?? '', $booking['tong_tien'] ?? '', $payStatus,
@@ -588,10 +610,13 @@ class CustomerController {
                         echo '</tr>';
                     }
                 } else {
+                    $sst++;
                     $row = [
+                        $sst,
                         $booking['id'] ?? '', $booking['so_hieu'] ?? '', $booking['noi_di'] ?? '', $booking['noi_den'] ?? '',
                         $dep, $airline, $plane, $bk,
-                        $booking['so_ghe_dat'] ?? '', $booking['tong_tien'] ?? '', $payStatus
+                        $booking['so_ghe_dat'] ?? '', $booking['tong_tien'] ?? '', $payStatus,
+                        '', '', '', '', '', '', '', ''
                     ];
                     echo '<tr>';
                     foreach ($row as $cell) {

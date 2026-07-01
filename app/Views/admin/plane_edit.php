@@ -15,7 +15,7 @@
       min-height:100vh;
     }
     .card:not(.bg-gradient){ background-color: rgba(255,255,255,0.95) !important; }
-    .card.bg-gradient{ background: linear-gradient(135deg, #3a7bd5, #1f3b8f) !important; color: #fff; border: none; box-shadow: 0 8px 24px rgba(0,0,0,0.25); }
+    .card.bg-gradient{ background: linear-gradient(135deg, #0E6B7E, #1B8FA0) !important; color: #fff; border: none; box-shadow: 0 8px 24px rgba(0,0,0,0.25); }
     .container.py-4{ background: transparent; }
   </style>
 </head>
@@ -24,7 +24,7 @@
   <div class="row justify-content-center">
     <div class="col-md-8">
       <div class="card shadow">
-        <div class="card-header bg-gradient" style="background: linear-gradient(135deg, #667eea, #764ba2);">
+        <div class="card-header bg-gradient" style="background: linear-gradient(135deg, #0E6B7E, #1B8FA0);">
           <h4 class="text-dark mb-0"><i class="bi bi-pencil-square"></i> Sửa Máy Bay</h4>
         </div>
         <div class="card-body p-4">
