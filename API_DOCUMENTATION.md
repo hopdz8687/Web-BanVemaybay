@@ -961,7 +961,7 @@ Cập nhật khách hàng.
 }
 ```
 
----
+---999
 
 ### DELETE /admin/customers/{id}
 Xóa khách hàng.
